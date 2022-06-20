@@ -21,6 +21,7 @@ export function Home() {
       
       <FlatList 
         data={[1,2,3,4]}
+        style={{ paddingHorizontal: 24 }}
         renderItem={({ item }) => (
           <CardMovieDetails />
         )}
@@ -42,6 +43,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: colors.green_light,
     marginTop: 20,
-    marginLeft: 24
+    marginLeft: 24,
+    marginBottom: 24
   }
 });
