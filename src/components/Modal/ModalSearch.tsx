@@ -1,6 +1,24 @@
+import { useNavigation } from '@react-navigation/native';
+import { useEffect } from 'react';
 import { View, FlatList, TouchableOpacity, Image, StyleSheet } from 'react-native';
 
-export function ModalSearch() {
+interface Props {
+  onCloseModal: () => void;
+}
+
+export function ModalSearch({ onCloseModal }: Props) {
+
+  const navigation: any = useNavigation();
+
+  function handleGoMovieDetails() {
+    onCloseModal();
+    navigation.push("MovieDetails");
+  }
+
+  useEffect(() => {
+
+  }, []);
+
   return (
     <View>
       <FlatList 
@@ -8,7 +26,7 @@ export function ModalSearch() {
         numColumns={2}
         style={styles.searchList}
         renderItem={({ item }) => (
-          <TouchableOpacity style={styles.posterButton} >
+          <TouchableOpacity style={styles.posterButton} onPress={() => handleGoMovieDetails()} >
             <Image source={{ uri: 'https://image.tmdb.org/t/p/original/yFSIUVTCvgYrpalUktulvk3Gi5Y.jpg' }} style={styles.poster} />
           </TouchableOpacity>
         )}

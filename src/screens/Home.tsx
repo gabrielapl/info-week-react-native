@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { CardMovieDetails } from '../components/CardMovieDetails';
 import { Header } from '../components/Header';
 import { ModalView } from '../components/Modal';
 import { ModalSearch } from '../components/Modal/ModalSearch';
@@ -16,9 +17,17 @@ export function Home() {
 
       <SearchInput openModal={() => setSearchModalVisible(true)} />
 
+      <Text style={styles.title} >Minha lista</Text>
+      
+      <FlatList 
+        data={[1,2,3,4]}
+        renderItem={({ item }) => (
+          <CardMovieDetails />
+        )}
+      />
 
       <ModalView visible={searchModalVisible} closeModal={() => setSearchModalVisible(false)}>
-        <ModalSearch />
+        <ModalSearch onCloseModal={() => setSearchModalVisible(false)} />
       </ModalView>
     </View>
   );
@@ -29,4 +38,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.black_light,
   },
+  title: {
+    fontSize: 18,
+    color: colors.green_light,
+    marginTop: 20,
+    marginLeft: 24
+  }
 });
