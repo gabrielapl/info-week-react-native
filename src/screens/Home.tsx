@@ -1,21 +1,48 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { CardMovieDetails } from '../components/CardMovieDetails';
 import { Header } from '../components/Header';
 import { ModalView } from '../components/Modal';
 import { ModalSearch } from '../components/Modal/ModalSearch';
 import { SearchInput } from '../components/SearchInput';
+import api from '../services/api';
 import colors from '../theme/colors';
+
+export interface SearchModalMovie {
+  id: number;
+  poster_path: string;
+}
 
 export function Home() {
 
   const [searchModalVisible, setSearchModalVisible] = useState(false);
+  const [search, setSearch] = useState('');
+  const [movies, setMovies] = useState<SearchModalMovie[]>([]);
 
+  async function searchMovies(){
+    try {
+      const response = await api.get("search/movie", {
+        params: {
+          query: search
+        }
+      });
+
+      setMovies(response.data.results);
+      setSearchModalVisible(true);
+
+    } catch (error) {
+      
+    }
+  }
+  
   return (
     <View style={styles.container}>
       <Header />
 
-      <SearchInput openModal={() => setSearchModalVisible(true)} />
+      <SearchInput 
+        onSearch={searchMovies} 
+        handleChangeSearch={(text) => setSearch(text)}
+      />
 
       <Text style={styles.title} >Minha lista</Text>
       
@@ -28,7 +55,7 @@ export function Home() {
       />
 
       <ModalView visible={searchModalVisible} closeModal={() => setSearchModalVisible(false)}>
-        <ModalSearch onCloseModal={() => setSearchModalVisible(false)} />
+        <ModalSearch onCloseModal={() => setSearchModalVisible(false)} movies={movies} />
       </ModalView>
     </View>
   );

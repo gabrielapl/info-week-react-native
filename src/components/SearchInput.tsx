@@ -4,15 +4,16 @@ import colors from '../theme/colors';
 import { useState } from 'react';
 
 interface Props {
-  openModal: () => void;
+  onSearch: () => void;
+  handleChangeSearch: (text: string) => void;
 }
 
-export function SearchInput({ openModal }: Props) {
+export function SearchInput({ onSearch, handleChangeSearch }: Props) {
 
-  const [search, setSearch] = useState('');
+  
 
   async function handleSearchMovie() {
-    openModal();
+    onSearch();
   }
 
   return (
@@ -23,8 +24,7 @@ export function SearchInput({ openModal }: Props) {
         placeholderTextColor="#B2B2B2"
         returnKeyType="send"
         selectionColor="#666666"
-        value={search}
-        onChangeText={text => setSearch(text)}
+        onChangeText={text => handleChangeSearch(text)}
         onSubmitEditing={handleSearchMovie}
       />
       <TouchableOpacity style={styles.searchButton} 
