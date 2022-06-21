@@ -15,7 +15,6 @@ export function CardMovieDetails() {
       <Image source={{ uri: 'https://image.tmdb.org/t/p/original/yFSIUVTCvgYrpalUktulvk3Gi5Y.jpg' }} style={styles.poster} />
       <View>
         <Text style={styles.title}>Vingadores</Text>
-        
       </View>
     </TouchableOpacity>
   )
