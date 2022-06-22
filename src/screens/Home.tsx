@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback, useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { CardMovieDetails } from '../components/CardMovieDetails';
 import { Header } from '../components/Header';
@@ -7,6 +8,8 @@ import { ModalSearch } from '../components/Modal/ModalSearch';
 import { SearchInput } from '../components/SearchInput';
 import api from '../services/api';
 import colors from '../theme/colors';
+import { getMoviesStorage } from '../utils/storage';
+import { MovieDetails } from './MovieDetails';
 
 export interface SearchModalMovie {
   id: number;
@@ -18,6 +21,7 @@ export function Home() {
   const [searchModalVisible, setSearchModalVisible] = useState(false);
   const [search, setSearch] = useState('');
   const [movies, setMovies] = useState<SearchModalMovie[]>([]);
+  const [moviesFavorite, setMoviesFavorite] = useState<MovieDetails[]>([]);
 
   async function searchMovies(){
     try {
@@ -35,6 +39,15 @@ export function Home() {
     }
   }
   
+  useFocusEffect(useCallback(()=>{
+    async function getMoviesFavorite () {
+      const response = await getMoviesStorage();
+      setMoviesFavorite(response);
+    }
+    
+    getMoviesFavorite();
+  },[]))
+
   return (
     <View style={styles.container}>
       <Header />
@@ -47,10 +60,10 @@ export function Home() {
       <Text style={styles.title} >Minha lista</Text>
       
       <FlatList 
-        data={[1,2,3,4]}
+        data={moviesFavorite}
         style={{ paddingHorizontal: 24 }}
         renderItem={({ item }) => (
-          <CardMovieDetails />
+          <CardMovieDetails movie={item} />
         )}
       />
 

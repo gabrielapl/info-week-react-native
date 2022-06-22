@@ -3,29 +3,47 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Button } from "../components/Button";
 import Feather from '@expo/vector-icons/Feather';
 import colors from "../theme/colors";
-import { useNavigation, useRoute } from "@react-navigation/native";
 import api from "../services/api";
+import { getMoviesStorage, setMoviesStorage, removeMovieStorage } from "../utils/storage";
 
-interface MovieDetails {
+export interface MovieDetails {
   backdrop_path: string;
   overview: string;
   title: string;
+  id: number;
+  poster_path: string;
 }
 
 export function MovieDetails({ navigation, route }:any) {
 
-  const [movie, setMovie] = useState<MovieDetails>({} as MovieDetails)
+  const [movie, setMovie] = useState<MovieDetails>({} as MovieDetails);
+  const [isFavorite, setIsFavorite] = useState(false);
   const { id } = route.params;
 
   function handleGoBack() {
     navigation.goBack();
   }
 
+  function handleSetFavorite() {
+    setMoviesStorage(movie);
+    setIsFavorite(true);
+  }
+
+  function handleRemoveFavorite() {
+    removeMovieStorage(movie.id);
+    setIsFavorite(false);
+  }
+
+
   useEffect(() => {
     async function getMovieDetails() {
       const response = await api.get("movie/" + id);
+      const movies = await getMoviesStorage();
 
-      setMovie(response.data);
+      const isFavorite = movies.find(movie => movie.id === id);
+      setIsFavorite(isFavorite ? true : false);
+
+      setMovie(response.data);  
     }
     
     getMovieDetails();
@@ -46,8 +64,9 @@ export function MovieDetails({ navigation, route }:any) {
           <Text style={styles.sinopse} >{movie.overview}</Text>
 
           <Button
-            text="Assistir mais tarde..."
-            color=""
+            text={isFavorite ? "Remover favorito..." : "Assistir mais tarde..."}
+            color={isFavorite ? colors.green_light : colors.red}
+            onPress={isFavorite ? handleRemoveFavorite: handleSetFavorite}
           />
         </View>
       </View>
