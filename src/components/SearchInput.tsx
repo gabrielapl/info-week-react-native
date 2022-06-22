@@ -1,7 +1,6 @@
 import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { Feather} from '@expo/vector-icons';
 import colors from '../theme/colors';
-import { useState } from 'react';
 
 interface Props {
   onSearch: () => void;
@@ -9,12 +8,6 @@ interface Props {
 }
 
 export function SearchInput({ onSearch, handleChangeSearch }: Props) {
-
-  
-
-  async function handleSearchMovie() {
-    onSearch();
-  }
 
   return (
     <View style={styles.inputContainer} >
@@ -25,11 +18,11 @@ export function SearchInput({ onSearch, handleChangeSearch }: Props) {
         returnKeyType="send"
         selectionColor="#666666"
         onChangeText={text => handleChangeSearch(text)}
-        onSubmitEditing={handleSearchMovie}
+        onSubmitEditing={onSearch}
       />
       <TouchableOpacity style={styles.searchButton} 
         activeOpacity={0.7}
-        onPress={handleSearchMovie}
+        onPress={onSearch}
       >
         <Feather name="chevron-right" size={24} color="#FFF" />
       </TouchableOpacity>
