@@ -7,7 +7,7 @@ import { ModalView } from '../components/Modal';
 import { ModalSearch } from '../components/Modal/ModalSearch';
 import { SearchInput } from '../components/SearchInput';
 import api from '../services/api';
-import colors from '../theme/colors';
+import utils from '../utils';
 import { getMoviesStorage } from '../utils/storage';
 import { MovieDetails } from './MovieDetails';
 
@@ -25,7 +25,7 @@ export function Home() {
 
   async function searchMovies(){
     try {
-      const response = await api.get("search/movie", {
+      const response = await api.get(utils.api.searchUrl, {
         params: {
           query: search
         }
@@ -77,11 +77,11 @@ export function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.black_light,
+    backgroundColor: utils.colors.black_light,
   },
   title: {
     fontSize: 18,
-    color: colors.green_light,
+    color: utils.colors.green_light,
     marginTop: 20,
     marginLeft: 24,
     marginBottom: 24

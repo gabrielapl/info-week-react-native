@@ -1,5 +1,5 @@
 import { View, StyleSheet } from 'react-native';
-import colors from '../theme/colors';
+import utils from '../utils';
 
 export function Header() {
   return (
@@ -13,6 +13,6 @@ export const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: 200,
-    backgroundColor: colors.green_light
+    backgroundColor: utils.colors.green_light
   }
 });

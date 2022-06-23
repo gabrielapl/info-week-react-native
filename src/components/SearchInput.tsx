@@ -1,6 +1,6 @@
 import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { Feather} from '@expo/vector-icons';
-import colors from '../theme/colors';
+import utils from '../utils';
 
 interface Props {
   onSearch: () => void;
@@ -14,9 +14,7 @@ export function SearchInput({ onSearch, handleChangeSearch }: Props) {
       <TextInput 
         style={styles.input}
         placeholder="Busque um filme..."
-        placeholderTextColor="#B2B2B2"
         returnKeyType="send"
-        selectionColor="#666666"
         onChangeText={text => handleChangeSearch(text)}
         onSubmitEditing={onSearch}
       />
@@ -32,7 +30,7 @@ export function SearchInput({ onSearch, handleChangeSearch }: Props) {
 
 export const styles = StyleSheet.create({
   inputContainer: {
-    backgroundColor: colors.white,
+    backgroundColor: utils.colors.white,
     borderRadius: 5,
     marginTop: -28,
     marginHorizontal: 24,
@@ -43,14 +41,14 @@ export const styles = StyleSheet.create({
     flex: 1,
     height: 56,
     paddingHorizontal: 20,
-    backgroundColor: colors.white,
+    backgroundColor: utils.colors.white,
     borderTopLeftRadius: 5,
     borderBottomLeftRadius: 5,
     borderRightWidth: 1,
-    color: colors.black_light
+    color: utils.colors.black_light
   },
   searchButton: {
-    backgroundColor: colors.green,
+    backgroundColor: utils.colors.green,
     height: 56,
     paddingHorizontal: 12,
     justifyContent: 'center',

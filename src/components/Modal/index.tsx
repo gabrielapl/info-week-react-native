@@ -1,7 +1,7 @@
 import React, {ReactNode } from 'react';
 
 import { Modal, ModalProps, View, TouchableWithoutFeedback, StyleSheet } from 'react-native';
-import colors from '../../theme/colors';
+import utils from '../../utils';
 
 type Props = ModalProps & {
   children: ReactNode;
@@ -33,17 +33,17 @@ export const styles = StyleSheet.create({
   container:{
     flex:1,
     marginTop: 100,
-    backgroundColor: colors.black_light
+    backgroundColor: utils.colors.black_light
   },
   overlay:{
     flex:1,
-    backgroundColor: colors.overlay
+    backgroundColor: utils.colors.overlay
   },
   bar:{
     width: 39,
     height:2,
     borderRadius:2,
-    backgroundColor: colors.green_light,
+    backgroundColor: utils.colors.green_light,
     alignSelf: "center",
     marginTop:13,
   }

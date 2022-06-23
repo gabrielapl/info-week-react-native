@@ -1,5 +1,5 @@
 import { TouchableOpacity, TouchableOpacityProps, Text, StyleSheet } from "react-native";
-import colors from "../theme/colors";
+import utils from "../utils";
 
 interface Props extends TouchableOpacityProps {
   text: string;
@@ -25,6 +25,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     fontWeight: '700',
-    color: colors.white
+    color: utils.colors.white
   }
 });

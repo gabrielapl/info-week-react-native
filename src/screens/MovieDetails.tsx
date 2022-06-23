@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Button } from "../components/Button";
 import Feather from '@expo/vector-icons/Feather';
-import colors from "../theme/colors";
 import api from "../services/api";
 import { getMoviesStorage, setMoviesStorage, removeMovieStorage } from "../utils/storage";
+import utils from "../utils";
 
 export interface MovieDetails {
   backdrop_path: string;
@@ -37,7 +37,7 @@ export function MovieDetails({ navigation, route }:any) {
 
   useEffect(() => {
     async function getMovieDetails() {
-      const response = await api.get("movie/" + id);
+      const response = await api.get(utils.api.movieDetailsUrl + id);
       const movies = await getMoviesStorage();
 
       const isFavorite = movies.find(movie => movie.id === id);
@@ -58,14 +58,14 @@ export function MovieDetails({ navigation, route }:any) {
       </View>
 
       <View style={styles.content} >
-        <Image source={{ uri: 'https://image.tmdb.org/t/p/original' + movie.backdrop_path }} style={styles.banner} />
+        <Image source={{ uri: utils.imageUrl + movie.backdrop_path }} style={styles.banner} />
         <View style={{ paddingHorizontal: 24 }} >
           <Text style={styles.title} >{movie.title}</Text>
           <Text style={styles.sinopse} >{movie.overview}</Text>
 
           <Button
             text={isFavorite ? "Remover favorito..." : "Assistir mais tarde..."}
-            color={isFavorite ? colors.green_light : colors.red}
+            color={isFavorite ? utils.colors.green_light : utils.colors.red}
             onPress={isFavorite ? handleRemoveFavorite: handleSetFavorite}
           />
         </View>
@@ -77,7 +77,7 @@ export function MovieDetails({ navigation, route }:any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.black_light,
+    backgroundColor: utils.colors.black_light,
   },
   header: {
     width: '100%',
@@ -99,11 +99,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: colors.white,
+    color: utils.colors.white,
     marginVertical: 12
   },
   sinopse: {
-    color: colors.white,
+    color: utils.colors.white,
     marginBottom: 24
   },
 });

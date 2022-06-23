@@ -1,8 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
-import { useEffect } from 'react';
 import { View, FlatList, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { SearchModalMovie } from '../../screens/Home';
-import api from '../../services/api';
 
 interface Props {
   onCloseModal: () => void;
